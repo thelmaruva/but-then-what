@@ -1,0 +1,21 @@
+body {
+    font-family: "Jua", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em;
+    text-align: center;
+    align-content: center;
+    margin: auto;
+    width: 80%;
+}
+
+.info-element {
+    font-family: "Inter", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+html {
+    font-size: 16px;
+}

@@ -1,0 +1,18 @@
+#review-page-title {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-top: 100px;
+    margin-bottom: 75px;
+}
+
+#questions-accordion {
+    margin-bottom: 100px;
+}
+
+#nav-buttons {
+    margin-left: 250px;
+}
+
+#panel1-header {
+    background-color: gainsboro;
+}
