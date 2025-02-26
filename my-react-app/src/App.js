@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { SessionProvider } from "./SessionContext";
 
 // Student Pages
 import StudentLanding from "./pages/student/Landing";
@@ -14,30 +15,35 @@ import LecturerQuestionReview from "./pages/lecturer/QuestionReview";
 import LecturerEnd from "./pages/lecturer/End";
 
 const App = () => {
-    const [userType, setUserType] = useState("lecturer"); // Change this to "lecturer" to test lecturer pages
+  const location = window.location.pathname; // Get current path
 
-  return (
-    <Router>
-      <div>
-        {/* Render routes based on userType */}
-        {userType === "student" ? (
-          <Routes>
-            <Route path="/" element={<StudentLanding />} />
-            <Route path="/questions" element={<StudentQuestionPage />} />
-            <Route path="/end" element={<StudentEnd />} />
-          </Routes>
-        ) : (
-          <Routes>
-            <Route path="/" element={<LecturerLanding />} />
-            <Route path="/info" element={<LecturerInfo />} />
-            <Route path="/setup" element={<LecturerQuestionSetup />} />
-            <Route path="/review" element={<LecturerQuestionReview />} />
-            <Route path="/end" element={<LecturerEnd />} />
-          </Routes>
-        )}
-      </div>
-    </Router>
-  );
+  // Determine userType based on URL
+  const userType = location.includes("/student") ? "student" : "lecturer";
+
+    return (
+      <SessionProvider>
+        <Router>
+          <div>
+            {/* Render routes based on userType */}
+            {userType === "student" ? (
+              <Routes>
+                <Route path="/student/:sessionId"  element={<StudentLanding />} />
+                <Route path="/questions" element={<StudentQuestionPage />} />
+                <Route path="/end" element={<StudentEnd />} />
+              </Routes>
+            ) : (
+              <Routes>
+                <Route path="/" element={<LecturerLanding />} />
+                <Route path="/info" element={<LecturerInfo />} />
+                <Route path="/setup" element={<LecturerQuestionSetup />} />
+                <Route path="/review" element={<LecturerQuestionReview />} />
+                <Route path="/end" element={<LecturerEnd />} />
+              </Routes>
+            )}
+          </div>
+        </Router>
+      </SessionProvider>
+    );
 };
 
 export default App;

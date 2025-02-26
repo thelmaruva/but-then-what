@@ -1,0 +1,18 @@
+#question_set_name {
+    margin-top: 50px;
+    margin-bottom: 10px;
+    font-size: 3rem;
+}
+
+#question {
+    font-size: 1.5rem;
+}
+
+#help-button {
+    margin-top: 20px;
+    margin-left: 442px;
+}
+
+#next-button {
+    margin-top: 20px;
+}
