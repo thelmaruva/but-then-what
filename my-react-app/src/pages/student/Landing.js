@@ -1,33 +1,29 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useSession } from "../../SessionContext";
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams} from "react-router-dom";
+import { useSession } from "../../SessionContext.js";
+import { TextField, Button } from '@mui/material';
 
 import './styles/Landing.css';
 
 const Landing = () => {
-    const navigate = useNavigate();
-    const questionPage = () => {
-        navigate("/questions");
-    }
-
     const { sessionId } = useParams();
     const { sessionData, fetchSession } = useSession();
     const [studentName, setStudentName] = useState(localStorage.getItem("studentName") || "");
 
+    const navigate = useNavigate();
+    const questionPage = () => {
+        navigate(`/student/questions/${sessionId}`);
+    }
+
     useEffect(() => {
-        if (!sessionData) {
-            fetchSession(sessionId);  // Fetch session data when student joins
-        }
-    }, [sessionId, sessionData, fetchSession]);
+            fetchSession(sessionId);
+    }, [sessionId, fetchSession]);
 
     const handleNameInput = (e) => {
         const name = e.target.value;
         setStudentName(name);
-        localStorage.setItem("studentName", name);  // Store name locally
+        localStorage.setItem("studentName", name);
     };
 
     return (

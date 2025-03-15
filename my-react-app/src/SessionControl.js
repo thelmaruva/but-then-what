@@ -1,6 +1,6 @@
-const express = require("express");
-const cors = require("cors");
-const { v4: uuidv4 } = require("uuid");
+import express from "express";
+import cors from "cors";
+import { v4 as uuidv4 } from "uuid";
 
 const app = express();
 app.use(cors());
@@ -13,19 +13,19 @@ app.post("/create-session", (req, res) => {
     const sessionId = uuidv4(); // Generate unique link ID
     sessions[sessionId] = { lecturerName, questionSetName, questions, keywords };
     
-    res.json({ sessionId, link: `http://localhost:3000/student/${sessionId}` });
+    res.json({ sessionId });
 });
 
-app.post("/join-session/:sessionId", (req, res) => {
-    // const { studentName } = req.body;
+app.post("/update-session/:sessionId", (req, res) => {
     const { sessionId } = req.params;
+    const { lecturerName, questionSetName, questions, keywords} = req.body;
 
     if (!sessions[sessionId]) {
         return res.status(404).json({ message: "Session not found" });
+    } else {
+        sessions[sessionId] = { lecturerName, questionSetName, questions, keywords };
+        res.json("Session updated");
     }
-
-    // sessions[sessionId].students.push(studentName);
-    res.json({ message: "Student added" });
 });
 
 app.get("/session/:sessionId", (req, res) => {

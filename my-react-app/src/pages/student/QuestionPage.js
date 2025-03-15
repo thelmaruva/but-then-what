@@ -1,30 +1,32 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useSession } from "../../SessionContext";
-import { useState } from "react";
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { useNavigate, useParams } from "react-router-dom";
+import { useSession } from "../../SessionContext.js";
+import { useState, useEffect } from "react";
+import { TextField, Button, Stack } from '@mui/material';
 import './styles/QuestionPage.css';
-import Stack from "@mui/material/Stack";
 
 const QuestionPage = () => {
-    // either navigate to next question or end if no more questions
+    const { sessionId } = useParams();
+    const { sessionData, fetchSession } = useSession();
+    const [currentIndex, setCurrentIndex] = useState(0);
+
     const navigate = useNavigate();
 
     const endPage = () => {
-        navigate.push("/");
+        navigate(`/student/end/${sessionId}`);
     }
 
-    const { sessionData } = useSession();
-    const [currentIndex, setCurrentIndex] = useState(0);
-
     const movePage = () => {
-        if (currentIndex + 1 > sessionData.questions.length) {
+        if (currentIndex + 2 > sessionData.questions.length) {
             endPage();
         } else {
             setCurrentIndex(currentIndex + 1)
         }
     };
+
+    useEffect(() => {
+        fetchSession(sessionId);  // Fetch session data when student joins
+    }, [sessionId, fetchSession]);
 
     return (
         <div>
@@ -32,7 +34,7 @@ const QuestionPage = () => {
             <p>When you need help with this question, put your code in the box below and ask me a question. If you don’t know what to do, click the button below and I will give you a step in the right direction.</p>
             <Stack spacing={2}>
                 <Stack direction="row" spacing={6}>
-                    <p id="question">value={sessionData.questions[currentIndex]}</p>
+                    <p id="question">{sessionData.questions[currentIndex]}</p>
                     <TextField
                         fullWidth
                         multiline
@@ -60,10 +62,9 @@ const QuestionPage = () => {
                 </Button> ) : ("")
                 }
                 <Button id="help-button" variant="contained">I need help.</Button>
-                <Button onClick={movePage}>
+                <Button id="next-button" variant="outlined" onClick={movePage}>
                     Next
                 </Button>
-                <Button id="next-button" variant="outlined">Next</Button>
             </Stack>
         </div>
     );

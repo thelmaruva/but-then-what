@@ -1,10 +1,8 @@
 import React from "react";
 import { useState } from "react"
-import { useSession } from "../../SessionContext";
+import { useSession } from "../../SessionContext.js";
 import { useNavigate } from "react-router-dom";
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Stack from "@mui/material/Stack";
+import { TextField , Button, Stack } from '@mui/material';
 import "./styles/QuestionSetup.css"
 
 const QuestionSetup = () => {

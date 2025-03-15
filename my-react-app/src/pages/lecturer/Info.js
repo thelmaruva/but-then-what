@@ -1,19 +1,18 @@
 import React from "react";
-import { useSession } from "../../SessionContext";
+import { useSession } from "../../SessionContext.js";
 import { useNavigate } from "react-router-dom";
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+import { TextField, Button, Stack } from '@mui/material';
 
 import './styles/Info.css';
 
 const Info = () => {
+
+    const { setLecturerName, setQuestionSetName } = useSession();
+
     const navigate = useNavigate();
     const setupPage = () => {
         navigate("/setup");
     }
-
-    const { setLecturerName, setQuestionSetName } = useSession();
 
     // const [sessionLink, setSessionLink] = useState("");
 

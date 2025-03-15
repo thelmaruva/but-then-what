@@ -1,29 +1,30 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useSession } from "../../SessionContext";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-
+import { useSession } from "../../SessionContext.js";
+import {
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
+    Typography,
+    Button,
+    Stack
+}
+    from '@mui/material';
+import { ArrowDropDown } from '@mui/icons-material';
 import './styles/QuestionReview.css';
 
 const QuestionReview = () => {
+    const { sessionData, fetchSession, sessionId } = useSession();
 
     const navigate = useNavigate();
     const endPage = () => {
-        navigate("/end");
+        navigate(`/end/${sessionId}`);
     }
+
     const setupPage = () => {
         navigate("/setup");
     }
-
-    const { sessionId } = useParams();
-    const { sessionData, fetchSession } = useSession();
 
     useEffect(() => {
         if (!sessionData) {
@@ -38,7 +39,7 @@ const QuestionReview = () => {
             <Accordion key={i} id={`question-${i}-accordion`}>
                 <AccordionSummary
                     className="panel-header"
-                    expandIcon={<ArrowDropDownIcon />}
+                    expandIcon={<ArrowDropDown />}
                     aria-controls={`panel${i}-content`}
                     id={`panel${i}-header`}
                 >
