@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 const anthropic = new Anthropic({
-  apiKey: process.env.FYP_PROJECT_KEY || "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",
+  apiKey: process.env.REACT_APP_FYP_PROJECT_KEY
 });
 
 // console.log("API Key:", process.env.FYP_PROJECT_KEY);

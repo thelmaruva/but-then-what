@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useParams} from "react-router-dom";
 import { useSession } from "../../SessionContext.js";
-import { TextField, Button } from '@mui/material';
+import { Button } from '@mui/material';
 
 import './styles/Landing.css';
 
