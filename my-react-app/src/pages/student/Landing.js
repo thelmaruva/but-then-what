@@ -9,7 +9,7 @@ import './styles/Landing.css';
 const Landing = () => {
     const { sessionId } = useParams();
     const { sessionData, fetchSession } = useSession();
-    const [studentName, setStudentName] = useState(localStorage.getItem("studentName") || "");
+    // const [studentName, setStudentName] = useState(localStorage.getItem("studentName") || "");
 
     const navigate = useNavigate();
     const questionPage = () => {
@@ -20,18 +20,18 @@ const Landing = () => {
             fetchSession(sessionId);
     }, [sessionId, fetchSession]);
 
-    const handleNameInput = (e) => {
-        const name = e.target.value;
-        setStudentName(name);
-        localStorage.setItem("studentName", name);
-    };
+    // const handleNameInput = (e) => {
+    //     const name = e.target.value;
+    //     setStudentName(name);
+    //     localStorage.setItem("studentName", name);
+    // };
 
     return (
         <div>
             <div id="intro-message">
                 <p id="student-welcome">Welcome to {sessionData.lecturerName}'s question set, {sessionData.questionSetName}</p>
             </div>
-            <p 
+            {/* <p 
                 className="info-element" 
                 id="name-instruction"
             >Please enter your name:</p>
@@ -40,7 +40,7 @@ const Landing = () => {
                 variant="outlined"
                 value={studentName}
                 onChange={handleNameInput}
-            />
+            /> */}
             <div id="student-start">
                 <Button variant="contained" onClick={questionPage}>Begin</Button>
             </div>

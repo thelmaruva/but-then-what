@@ -1,8 +1,19 @@
+import express from 'express';
 import Anthropic from "@anthropic-ai/sdk";
-
 import * as dotenv from "dotenv";
+import cors from 'cors';
 
 dotenv.config();
+
+const app = express();
+const port = 8080;
+
+app.use(cors());
+app.use(express.json());
+
+const anthropic = new Anthropic({
+  apiKey: process.env.FYP_PROJECT_KEY || "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",
+});
 
 // console.log("API Key:", process.env.FYP_PROJECT_KEY);
 
@@ -10,29 +21,39 @@ dotenv.config();
 //   apiKey: process.env.FYP_PROJECT_KEY,
 // });
 
-const anthropic = new Anthropic({
-    apiKey: "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",
-  });
-
 // if (!anthropic.apiKey) {
 //   throw new Error("Missing Anthropic API key");
 // }
 
-const msg = await anthropic.messages.create({
-  model: "claude-3-7-sonnet-20250219",
-  max_tokens: 1000,
-  temperature: 1,
-  system: "Check that the text does not contain any answers to the question. Respond only with a YES or NO, no explanation is needed.",
-  messages: [
-    {
-      role: "user",
-      content: [
-        {
-          type: "text",
-          text: "You should write int i = 2 + 2;"
-        }
-      ]
-    }
-  ]
+app.post('/ask-claude-validate', async (req, res) => {
+  const { responseToCheck, questionToCheck } = req.body;
+
+  try{
+    const msg = await anthropic.messages.create({
+    model: "claude-3-7-sonnet-20250219",
+    max_tokens: 1000,
+    temperature: 1,
+    system: "Respond only with a YES or NO, no explanation is needed.",
+    messages: [
+      {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: "Does the text contain the solution to this question?: " + questionToCheck + "This is the text: " + responseToCheck
+          }
+        ]
+      }
+    ]
+    });
+    res.json({ response: msg });
+      } catch (error) {
+        console.error("Error calling Claude API:", error);
+        res.status(500).json({ error: "Failed to get response from Claude API" });
+      }
 });
-console.log(msg);
+
+
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+});

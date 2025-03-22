@@ -1,37 +1,50 @@
+import express from 'express';
 import Anthropic from "@anthropic-ai/sdk";
 import * as dotenv from "dotenv";
+import cors from 'cors';
 
 dotenv.config();
 
-// console.log("API Key:", process.env.FYP_PROJECT_KEY);
+const app = express();
+const port = 4000;
 
-// const anthropic = new Anthropic({
-//   apiKey: process.env.FYP_PROJECT_KEY,
-// });
+app.use(cors());
+app.use(express.json());
 
 const anthropic = new Anthropic({
-    apiKey: "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",
-  });
+  apiKey: process.env.FYP_PROJECT_KEY || "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",
+});
 
-// if (!anthropic.apiKey) {
-//   throw new Error("Missing Anthropic API key");
-// }
+app.post('/ask-claude', async (req, res) => {
+  const { questionData } = req.body;
+  const { question, keywords, code, query } = questionData;
 
-const msg = await anthropic.messages.create({
-  model: "claude-3-7-sonnet-20250219",
-  max_tokens: 1000,
-  temperature: 1,
-  system: "Respond like a tutor speaking to a student. You can guide them in the right direction but you cannot tell them the answer.",
-  messages: [
-    {
-      role: "user",
-      content: [
+  try {
+    const msg = await anthropic.messages.create({
+      model: "claude-3-5-haiku-20241022",
+      max_tokens: 1000,
+      temperature: 1,
+      system: "Respond like a tutor speaking to a student. Help the student to reason out the question they've been given by responding with probing questions or hints to help move the student closer to the desired output. You can guide them in the right direction but you cannot tell them the answer. These keywords were given to help you understand the domain of this problem: " + keywords,
+      messages: [
         {
-          type: "text",
-          text: "I am trying to solve a functional programming coding problem where I have to create a function that will recursively print out Fibonacci numbers but I don't know where to start."
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: ". I was given this question, and I am having trouble trying to solve it: " + question + 
+              "This is the code I have so far: " + code + "\n" + query
+            }
+          ]
         }
       ]
-    }
-  ]
+    });
+    res.json({ response: msg });
+  } catch (error) {
+    console.error("Error calling Claude API:", error);
+    res.status(500).json({ error: "Failed to get response from Claude API" });
+  }
 });
-console.log(msg);
+
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+});
