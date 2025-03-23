@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSession } from "../../SessionContext.js";
 import { Button , TextField, Stack} from "@mui/material";
@@ -10,6 +10,8 @@ import './styles/End.css';
 const End = () => {
     const navigate = useNavigate();
     const { sessionData, sessionId, updateSession} = useSession();
+    const [linkCopied, setLinkCopied] = useState(false);
+    
     
     const landingPage = () => {
         navigate("/");
@@ -19,6 +21,7 @@ const End = () => {
 
     const copyToClipboard = () => {
         copy(copyLink);
+        setLinkCopied(true);
     };
 
     useEffect(() => {
@@ -57,6 +60,11 @@ const End = () => {
                     Copy
                 </Button>
             </Stack>
+            {linkCopied && (
+                <div style={{ marginTop: "10px", textAlign: "center" }}>
+                    <p>Link Copied</p>
+                </div>
+            )}
             <div>
                 <Button variant="contained" onClick={landingPage}>Create new question set</Button>
             </div>
