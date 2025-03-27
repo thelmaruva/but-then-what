@@ -170,7 +170,7 @@ const QuestionPage = () => {
             </Stack>
 
             {isLoading && (
-                <div style={{ marginTop: "20px", textAlign: "center" }}>
+                <div style={{ marginTop: "10px", textAlign: "center" }}>
                     <p>Loading answer...</p>
                 </div>
             )}
