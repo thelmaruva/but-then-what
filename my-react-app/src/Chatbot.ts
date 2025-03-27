@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 const anthropic = new Anthropic({
-  apiKey: process.env.REACT_APP_FYP_PROJECT_KEY,
+  apiKey: process.env.REACT_APP_FYP_KEY,
 });
 
 app.post('/ask-claude', async (req, res) => {

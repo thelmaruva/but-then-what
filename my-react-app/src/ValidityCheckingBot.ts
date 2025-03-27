@@ -12,18 +12,12 @@ app.use(cors());
 app.use(express.json());
 
 const anthropic = new Anthropic({
-  apiKey: process.env.REACT_APP_FYP_PROJECT_KEY
+  apiKey: process.env.REACT_APP_FYP_KEY
 });
 
-// console.log("API Key:", process.env.FYP_PROJECT_KEY);
-
-// const anthropic = new Anthropic({
-//   apiKey: process.env.FYP_PROJECT_KEY,
-// });
-
-// if (!anthropic.apiKey) {
-//   throw new Error("Missing Anthropic API key");
-// }
+if (!anthropic.apiKey) {
+  throw new Error("Missing Anthropic API key");
+}
 
 app.post('/ask-claude-validate', async (req, res) => {
   const { responseToCheck, questionToCheck } = req.body;
