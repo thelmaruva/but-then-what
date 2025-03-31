@@ -8,6 +8,8 @@ app.use(express.json());
 
 let sessions = {}; // Temporary storage
 
+const port = process.env.PORT || 5000;
+
 app.post("/create-session", (req, res) => {
     const { lecturerName, questionSetName, questions, keywords} = req.body;
     const sessionId = uuidv4(); // Generate unique link ID
@@ -36,4 +38,4 @@ app.get("/session/:sessionId", (req, res) => {
     res.json(session);
 });
 
-app.listen(5000, () => console.log("Server running on port 5000"));
+app.listen(port, () => console.log("Server running on port 5000"));
