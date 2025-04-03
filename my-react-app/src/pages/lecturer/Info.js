@@ -14,19 +14,6 @@ const Info = () => {
         navigate("/setup");
     }
 
-    // const [sessionLink, setSessionLink] = useState("");
-
-
-    // const createSession = async () => {
-    //     const response = await fetch("http://localhost:5000/create-session", {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify({ lecturerName, questionSetName }),
-    //     });
-    //     const data = await response.json();
-    //     setSessionLink(data.link);
-    // };
-
     return (
         <div>
             <h1 id="page-title">Question Setup</h1>

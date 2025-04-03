@@ -15,6 +15,9 @@ export const SessionProvider = ({ children }) => {
 
     const [sessionId, setSessionId] = useState("");
 
+    const port = Number(process.env.PORT) || 8080;
+
+
     // Function to update session details
     const setLecturerName = (name) => {
         setSessionData((prev) => ({ ...prev, lecturerName: name }));
@@ -34,7 +37,7 @@ export const SessionProvider = ({ children }) => {
 
     const createSession = useCallback(async (data) => {
         try {
-            const response = await fetch("http://localhost:5000/create-session", {
+            const response = await fetch(`http://localhost:${port}/create-session`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -55,11 +58,11 @@ export const SessionProvider = ({ children }) => {
             console.error("Error creating session:", error);
             throw error;
         }
-    }, []);
+    }, [port]);
 
     const updateSession = useCallback(async (data, sessionId) => {
         try {
-            const response = await fetch(`http://localhost:5000/update-session/${sessionId}`, {
+            const response = await fetch(`http://localhost:${port}/update-session/${sessionId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -77,11 +80,11 @@ export const SessionProvider = ({ children }) => {
             console.error("Error updating session:", error);
             throw error;
         }
-    }, []);
+    }, [port]);
 
     const fetchSession = useCallback(async (sessionId) => {
         try {
-            const response = await fetch(`http://localhost:5000/session/${sessionId}`);
+            const response = await fetch(`http://localhost:${port}/session/${sessionId}`);
             if (!response.ok) {
                 throw new Error("Failed to fetch session");
             }
@@ -90,7 +93,7 @@ export const SessionProvider = ({ children }) => {
         } catch (error) {
             console.error("Error fetching session:", error);
         }
-    }, []);
+    }, [port]);
 
     return (
         <SessionContext.Provider value={{ sessionData, setLecturerName, setQuestionSetName, setQuestions, setKeywords, createSession, updateSession, fetchSession, sessionId }}>

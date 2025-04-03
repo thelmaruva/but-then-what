@@ -14,6 +14,7 @@ const QuestionPage = () => {
     const [currentCode, setCurrentCode] = useState("");
     const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const port = Number(process.env.PORT) || 8080; // Single port for all routes
 
     const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ const QuestionPage = () => {
 
     const askClaude = async() => {
         setIsLoading(true);
-        const currentQuery = currentQuestion === "" ? "I don't know how to move forward with this question. Could you help?" : currentQuestion;
+        const currentQuery = currentQuestion === "" ? "I don't know how to move forward with this question. Could you help?\n" : currentQuestion + "\n";
 
         try {
             const questionData = {
@@ -40,7 +41,7 @@ const QuestionPage = () => {
                 code: currentCode,
                 query: currentQuery
             };
-            const response = await fetch('http://localhost:4000/ask-claude', {
+            const response = await fetch(`http://localhost:${port}/ask-claude`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +57,7 @@ const QuestionPage = () => {
                     { role: "assistant", content: `Error: ${data.error}` },
                   ]);
             } else {
-                const responseText = data.response.content.map((item) => item.text).join("\n");
+                const responseText = data.response.content.map((item) => item.text).join("\n\n");
 
                 const noLeakCheck = await validateQuestion(responseText, questionData.question);
 
@@ -72,7 +73,7 @@ const QuestionPage = () => {
     }
 
     const validateQuestion = async(aiResponse, currentQuestion) => {
-        const response = await fetch('http://localhost:8080/ask-claude-validate', {
+        const response = await fetch(`http://localhost:${port}/ask-claude-validate`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

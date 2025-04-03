@@ -12,12 +12,11 @@ const End = () => {
     const { sessionData, sessionId, updateSession} = useSession();
     const [linkCopied, setLinkCopied] = useState(false);
     
-    
     const landingPage = () => {
         navigate("/");
     }
 
-    const copyLink = `http://localhost:3000/student/${sessionId}`;
+    const copyLink = `${window.location.origin}/student/${sessionId}`;
 
     const copyToClipboard = () => {
         copy(copyLink);

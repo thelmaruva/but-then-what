@@ -15,31 +15,6 @@ import LecturerQuestionSetup from "./pages/lecturer/QuestionSetup.js";
 import LecturerQuestionReview from "./pages/lecturer/QuestionReview.js";
 import LecturerEnd from "./pages/lecturer/End.js";
 
-// const SessionInitializer = () => {
-//   const { createSession } = useSession();
-
-//   useEffect(() => {
-//       const initializeSession = async () => {
-//           try {
-//               const sessionData = {
-//                   lecturerName: "",
-//                   questionSetName: "",
-//                   questions: [],
-//                   keywords: [],
-//               };
-//               await createSession(sessionData);
-//               console.log("Session created automatically!");
-//           } catch (error) {
-//               console.error("Failed to create session:", error);
-//           }
-//       };
-
-//       initializeSession();
-//   }, [createSession]);
-
-//   return null; // This component doesn't render anything
-// };
-
 const App = () => {
 
   const location = window.location.pathname; // Get current path
@@ -48,7 +23,6 @@ const App = () => {
 
     return (
       <SessionProvider>
-        {/* <SessionInitializer /> */}
           <Router>
             <div>
               {/* Render routes based on userType */}
