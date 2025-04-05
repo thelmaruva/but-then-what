@@ -1,6 +1,7 @@
 import express from 'express';
 import Anthropic from "@anthropic-ai/sdk";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
+import "dotenv/config";
 import cors from 'cors';
 import { v4 as uuidv4 } from "uuid";
 import path from 'path';
@@ -8,7 +9,9 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config();
+// dotenv.config();
+
+console.log(require.resolve('dotenv'));
 
 const app = express();
 const port = Number(process.env.PORT) || 8080; // Single port for all routes
