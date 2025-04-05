@@ -162,7 +162,10 @@ const QuestionPage = () => {
                     }
                 }}
             />
-            <Stack direction="row" spacing={40}>
+            <Stack direction="row"  sx={{
+                justifyContent: "space-between",
+                alignItems: "center",
+            }}>
                 {currentIndex > 0 ? (
                 <Button onClick={() => setCurrentIndex(currentIndex - 1)}>
                     Previous
@@ -175,7 +178,7 @@ const QuestionPage = () => {
             </Stack>
 
             {isLoading && (
-                <div style={{ marginTop: "10px", textAlign: "center" }}>
+                <div style={{ marginTop: "5px", textAlign: "center" }}>
                     <p>Loading answer...</p>
                 </div>
             )}

@@ -1,14 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SessionProvider} from "./SessionContext.js";
-// import { useEffect } from "react";
 
-// Student Pages
 import StudentLanding from "./pages/student/Landing.js";
 import StudentQuestionPage from "./pages/student/QuestionPage.js";
 import StudentEnd from "./pages/student/End.js";
 
-// Lecturer Pages
 import LecturerLanding from "./pages/lecturer/Landing.js";
 import LecturerInfo from "./pages/lecturer/Info.js";
 import LecturerQuestionSetup from "./pages/lecturer/QuestionSetup.js";
@@ -17,15 +14,13 @@ import LecturerEnd from "./pages/lecturer/End.js";
 
 const App = () => {
 
-  const location = window.location.pathname; // Get current path
-  // Determine userType based on URL
+  const location = window.location.pathname;
   const userType = location.includes("/student") ? "student" : "lecturer";
 
     return (
       <SessionProvider>
           <Router>
             <div>
-              {/* Render routes based on userType */}
               {userType === "student" ? (
                 <Routes>
                   <Route path="/student/:sessionId" element={<StudentLanding />} />

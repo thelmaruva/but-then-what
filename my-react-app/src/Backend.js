@@ -9,19 +9,20 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
-const port = Number(process.env.PORT) || 8080; // Single port for all routes
-// Middleware (shared for all routes)
+const port = Number(process.env.PORT) || 8080; 
+
 app.use(cors());
 app.use(express.json());
-// Temporary storage for sessions
+
 let sessions = {};
+
 const anthropic = new Anthropic({
     apiKey: process.env.REACT_APP_FYP_KEY
 });
 if (!anthropic.apiKey) {
     throw new Error("Missing Anthropic API key");
 }
-// --- Routes from your first app ---
+
 app.post('/ask-claude-validate', async (req, res) => {
     const { responseToCheck, questionToCheck } = req.body;
     try {
@@ -49,7 +50,7 @@ app.post('/ask-claude-validate', async (req, res) => {
         res.status(500).json({ error: "Failed to get response from Claude API" });
     }
 });
-// --- Routes from your second app ---
+
 app.post('/ask-claude', async (req, res) => {
     const { questionData } = req.body;
     const { question, keywords, code, query } = questionData;
@@ -79,13 +80,14 @@ app.post('/ask-claude', async (req, res) => {
         res.status(500).json({ error: "Failed to get response from Claude API" });
     }
 });
-// --- Routes from your third app ---
+
 app.post("/create-session", (req, res) => {
     const { lecturerName, questionSetName, questions, keywords } = req.body;
-    const sessionId = uuidv4(); // Generate unique link ID
+    const sessionId = uuidv4();
     sessions[sessionId] = { lecturerName, questionSetName, questions, keywords };
     res.json({ sessionId });
 });
+
 app.post("/update-session/:sessionId", (req, res) => {
     const { sessionId } = req.params;
     const { lecturerName, questionSetName, questions, keywords } = req.body;
@@ -97,6 +99,7 @@ app.post("/update-session/:sessionId", (req, res) => {
         res.json("Session updated");
     }
 });
+
 app.get("/session/:sessionId", (req, res) => {
     const session = sessions[req.params.sessionId];
     if (!session) {
@@ -104,11 +107,13 @@ app.get("/session/:sessionId", (req, res) => {
     }
     res.json(session);
 });
+
 app.use(express.static(path.join(__dirname, 'build')));
-// Handle client-side routing - return index.html for all non-API routes
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server running on port ${port}`);
 });

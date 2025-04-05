@@ -18,7 +18,7 @@ const QuestionSetup = () => {
     const addQuestion = () => {
         const updatedQuestions = [...sessionData.questions, ""];
         setQuestions(updatedQuestions);
-        setCurrentIndex(updatedQuestions.length - 1); // Go to the new question
+        setCurrentIndex(updatedQuestions.length - 1);
     };
 
     const updateQuestion = (value) => {
@@ -26,14 +26,6 @@ const QuestionSetup = () => {
         updatedQuestions[currentIndex] = value;
         setQuestions(updatedQuestions);
     };
-
-    const deleteQuestion = () => {
-        let newQuestions = sessionData.questions;
-        if (currentIndex > -1) { 
-            newQuestions = sessionData.questions.splice(currentIndex, 1);
-        }
-        setQuestions(newQuestions);
-    }
 
     const addKeywords = () => {
         const updatedKeywords = [...sessionData.keywords, ""];
@@ -46,23 +38,16 @@ const QuestionSetup = () => {
         updatedKeywords[currentIndex] = value;
         setKeywords(updatedKeywords);
     };
-
-    const deleteKeywords = () => {
-        let newKeywords = sessionData.keywords
-        if (currentIndex > -1) { 
-            newKeywords = sessionData.keywords.splice(currentIndex, 1);
-        }
-        setKeywords(newKeywords);
-    }
     
     return (
         <div id="question_nav_row">
-            <Stack direction="row" spacing={60}>
+            <Stack direction="row" 
+            sx={{
+                justifyContent: "space-between",
+                alignItems: "center",
+            }}>
                 <h1 className="info-element" id="question_num">Question {currentIndex + 1}:</h1>
-                <Stack direction="row" spacing={2}>
-                    <Button variant="contained" size="small" onClick={deleteQuestion && deleteKeywords}>Delete question</Button>
-                    <Button variant="contained" onClick={addQuestion && addKeywords} disabled={sessionData.questions[currentIndex] === ""}>Add new question</Button>
-                </Stack>
+                <Button variant="contained" onClick={addQuestion && addKeywords} disabled={sessionData.questions[currentIndex] === ""}>Add new question</Button>
             </Stack>
             <Stack id="question_keyword_input" direction="row" spacing={6}>
                 <TextField
@@ -98,9 +83,12 @@ const QuestionSetup = () => {
                     Next
                 </Button>
             </Stack>
-            <div id="finish-setup-button">
-                <Button variant="contained" onClick={reviewPage}>Finish question setup</Button>
-            </div>
+            <Stack direction="row" sx={{
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                  }}>
+                <Button  id="finish-setup-button" variant="contained" onClick={reviewPage}> Finish question setup</Button>
+            </Stack>
         </div>
     );
 }

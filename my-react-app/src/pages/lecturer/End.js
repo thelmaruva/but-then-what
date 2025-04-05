@@ -60,7 +60,7 @@ const End = () => {
                 </Button>
             </Stack>
             {linkCopied && (
-                <div style={{ marginTop: "10px", textAlign: "center" }}>
+                <div style={{ marginTop: "5px", textAlign: "center" }}>
                     <p>Link Copied</p>
                 </div>
             )}

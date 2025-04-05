@@ -1,5 +1,5 @@
 #question_nav_row {
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 #question_keyword_input {
@@ -10,8 +10,4 @@
 #pagination {
     margin-left: 400px;
     margin-bottom: 20px;
-}
-
-#finish-setup-button {
-    margin-left: 820px;
 }

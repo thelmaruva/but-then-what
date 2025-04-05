@@ -30,7 +30,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "backend:build": "tsc",
+    "backend:build": "npx tsc",
     "backend:start": "node dist/Backend.js"
   },
   "eslintConfig": {
