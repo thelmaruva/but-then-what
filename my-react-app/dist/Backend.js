@@ -8,7 +8,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-// dotenv.config();
 console.log(await import.meta.resolve('dotenv'));
 const app = express();
 const port = Number(process.env.PORT) || 8080; // Single port for all routes
@@ -106,10 +105,9 @@ app.get("/session/:sessionId", (req, res) => {
     }
     res.json(session);
 });
-app.use(express.static(path.join(__dirname, 'build')));
-// Handle client-side routing - return index.html for all non-API routes
+app.use(express.static(path.join(__dirname, '../build')));
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server running on port ${port}`);
