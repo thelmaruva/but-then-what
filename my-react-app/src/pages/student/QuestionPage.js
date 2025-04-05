@@ -14,7 +14,10 @@ const QuestionPage = () => {
     const [currentCode, setCurrentCode] = useState("");
     const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const port = Number(process.env.PORT) || 8080; // Single port for all routes
+
+    const API_BASE_URL = process.env.NODE_ENV === 'development' 
+    ? 'http://localhost:8080' 
+    : 'https://your-app-name.onrender.com';
 
     const navigate = useNavigate();
 
@@ -41,7 +44,7 @@ const QuestionPage = () => {
                 code: currentCode,
                 query: currentQuery
             };
-            const response = await fetch(`http://localhost:${port}/ask-claude`, {
+            const response = await fetch(`${API_BASE_URL}/ask-claude`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,7 +60,7 @@ const QuestionPage = () => {
                     { role: "assistant", content: `Error: ${data.error}` },
                   ]);
             } else {
-                const responseText = data.response.content.map((item) => item.text).join("\n\n");
+                const responseText = data.response.content.map((item) => item.text).join("\n");
 
                 const noLeakCheck = await validateQuestion(responseText, questionData.question);
 
@@ -73,7 +76,7 @@ const QuestionPage = () => {
     }
 
     const validateQuestion = async(aiResponse, currentQuestion) => {
-        const response = await fetch(`http://localhost:${port}/ask-claude-validate`, {
+        const response = await fetch(`${API_BASE_URL}/ask-claude-validate`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -87,6 +90,7 @@ const QuestionPage = () => {
     }
 
     const displayAnswer = async(isAnswerLeakingInfo, currentQuery, currentAnswer) => {
+        currentAnswer = currentAnswer + "\n" ;
         console.log(isAnswerLeakingInfo);
         if(isAnswerLeakingInfo === "NO"){
             setMessages((prevMessages) => [
