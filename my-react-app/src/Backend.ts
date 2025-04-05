@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 
 // dotenv.config();
 
-console.log(require.resolve('dotenv'));
+console.log(await import.meta.resolve('dotenv'));
 
 const app = express();
 const port = Number(process.env.PORT) || 8080; // Single port for all routes
