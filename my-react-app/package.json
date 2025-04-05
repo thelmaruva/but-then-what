@@ -13,6 +13,7 @@
     "copy-to-clipboard": "^3.3.3",
     "cors": "^2.8.5",
     "cra-template": "1.2.0",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -20,14 +21,15 @@
     "react-scripts": "^5.0.1",
     "styled-components": "^6.1.15",
     "uuid": "^11.1.0",
-    "web-vitals": "^4.2.4",
-    "dotenv": "^16.4.7"
+    "web-vitals": "^4.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "backend:build": "tsc",
+    "backend:start": "node dist/Backend.js"
   },
   "eslintConfig": {
     "extends": [
@@ -56,6 +58,7 @@
     "@types/dotenv": "^6.1.1",
     "css-loader": "^7.1.2",
     "dotenv": "^16.4.7",
-    "style-loader": "^4.0.0"
+    "style-loader": "^4.0.0",
+    "typescript": "^5.8.3"
   }
 }
