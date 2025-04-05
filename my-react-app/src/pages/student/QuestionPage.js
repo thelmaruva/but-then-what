@@ -17,7 +17,7 @@ const QuestionPage = () => {
 
     const API_BASE_URL = process.env.NODE_ENV === 'development' 
     ? 'http://localhost:8080' 
-    : 'https://your-app-name.onrender.com';
+    : 'https://but-then-what.onrender.com';
 
     const navigate = useNavigate();
 

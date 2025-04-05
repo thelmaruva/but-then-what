@@ -17,7 +17,7 @@ export const SessionProvider = ({ children }) => {
 
     const API_BASE_URL = process.env.NODE_ENV === 'development' 
     ? 'http://localhost:8080' 
-    : 'https://your-app-name.onrender.com';
+    : 'https://but-then-what.onrender.com';
 
     // Function to update session details
     const setLecturerName = (name) => {
