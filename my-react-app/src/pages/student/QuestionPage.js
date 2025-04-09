@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSession } from "../../SessionContext.js";
 import { useState, useEffect } from "react";
 import { TextField, Button, Stack } from '@mui/material';
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import './styles/QuestionPage.css';
 
 const QuestionPage = () => {
@@ -14,6 +16,18 @@ const QuestionPage = () => {
     const [currentCode, setCurrentCode] = useState("");
     const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+
+    const firebaseConfig = {  
+        apiKey: process.env.REACT_APP_DB_KEY,
+        authDomain: "but-then-what.firebaseapp.com",
+        projectId: "but-then-what",
+        storageBucket: "but-then-what.firebasestorage.app",
+        messagingSenderId: "1036479180485",
+        appId: "1:1036479180485:web:d44f40e57d9bf8f1b9caac",
+        measurementId: "G-T9TX31MZ9E"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
     const API_BASE_URL = process.env.NODE_ENV === 'development' 
     ? 'http://localhost:8080' 
@@ -89,23 +103,28 @@ const QuestionPage = () => {
             return answer;
     }
 
-    const displayAnswer = async(isAnswerLeakingInfo, currentQuery, currentAnswer) => {
-        currentAnswer = currentAnswer + "\n" ;
-        console.log(isAnswerLeakingInfo);
-        if(isAnswerLeakingInfo === "NO"){
-            setMessages((prevMessages) => [
-                ...prevMessages,
+    const displayAnswer = async (isAnswerLeakingInfo, currentQuery, currentAnswer) => {
+        currentAnswer = currentAnswer + "\n";
+    
+        let updatedMessages = [...messages];
+    
+        if (isAnswerLeakingInfo === "NO") {
+            updatedMessages = [
+                ...updatedMessages,
                 { role: "user", content: currentQuery },
-            ]);
-
-            setMessages((prevMessages) => [
-                ...prevMessages,
                 { role: "assistant", content: currentAnswer },
-              ]);
+            ];
+            setMessages(updatedMessages);
         } else {
             askClaude();
         }
-    }
+    
+        await addDoc(collection(db, "conversations"), {
+            sessionId,
+            messages: updatedMessages,
+            timestamp: new Date(),
+        });
+    };
 
     useEffect(() => {
         fetchSession(sessionId);

@@ -1,6 +1,5 @@
 import express from 'express';
 import Anthropic from "@anthropic-ai/sdk";
-// import dotenv from "dotenv";
 import "dotenv/config";
 import cors from 'cors';
 import { v4 as uuidv4 } from "uuid";
@@ -10,11 +9,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 console.log(await import.meta.resolve('dotenv'));
 const app = express();
-const port = Number(process.env.PORT) || 8080; // Single port for all routes
-// Middleware (shared for all routes)
+const port = Number(process.env.PORT) || 8080;
 app.use(cors());
 app.use(express.json());
-// Temporary storage for sessions
 let sessions = {};
 const anthropic = new Anthropic({
     apiKey: process.env.REACT_APP_FYP_KEY
@@ -22,12 +19,11 @@ const anthropic = new Anthropic({
 if (!anthropic.apiKey) {
     throw new Error("Missing Anthropic API key");
 }
-// --- Routes from your first app ---
 app.post('/ask-claude-validate', async (req, res) => {
     const { responseToCheck, questionToCheck } = req.body;
     try {
         const msg = await anthropic.messages.create({
-            model: "claude-3-7-sonnet-20250219",
+            model: "claude-3-5-haiku-20241022",
             max_tokens: 1000,
             temperature: 1,
             system: "Respond only with a YES or NO, no explanation is needed.",
@@ -50,7 +46,6 @@ app.post('/ask-claude-validate', async (req, res) => {
         res.status(500).json({ error: "Failed to get response from Claude API" });
     }
 });
-// --- Routes from your second app ---
 app.post('/ask-claude', async (req, res) => {
     const { questionData } = req.body;
     const { question, keywords, code, query } = questionData;
@@ -80,10 +75,9 @@ app.post('/ask-claude', async (req, res) => {
         res.status(500).json({ error: "Failed to get response from Claude API" });
     }
 });
-// --- Routes from your third app ---
 app.post("/create-session", (req, res) => {
     const { lecturerName, questionSetName, questions, keywords } = req.body;
-    const sessionId = uuidv4(); // Generate unique link ID
+    const sessionId = uuidv4();
     sessions[sessionId] = { lecturerName, questionSetName, questions, keywords };
     res.json({ sessionId });
 });
