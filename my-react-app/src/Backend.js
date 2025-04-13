@@ -27,7 +27,7 @@ app.post('/ask-claude-validate', async (req, res) => {
     const { responseToCheck, questionToCheck } = req.body;
     try {
         const msg = await anthropic.messages.create({
-            model: "claude-3-7-sonnet-20250219",
+            model: "claude-3-5-haiku-20241022",
             max_tokens: 1000,
             temperature: 1,
             system: "Respond only with a YES or NO, no explanation is needed.",
