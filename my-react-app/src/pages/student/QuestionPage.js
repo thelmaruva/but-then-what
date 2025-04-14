@@ -43,6 +43,8 @@ const QuestionPage = () => {
         } else {
             setCurrentIndex(currentIndex + 1)
         }
+        setMessages([]);
+        setCurrentCode("");
     };
 
     const askClaude = async() => {
@@ -139,7 +141,7 @@ const QuestionPage = () => {
     return (
         <div>
             <h1 id="question_set_name">{sessionData.questionSetName} - Question {currentIndex + 1}</h1>
-            <p>When you need help with this question, put your code in the box below and ask me a question. If you don't know what to do, click the button below and I will give you a step in the right direction.</p>
+            <p>Start the question in your IDE. When you need help with this question, put your code in the box below and ask me a question. If you don't know what to do, click the button below and I will give you a step in the right direction.</p>
             <Stack direction="row" spacing={6}>
                 <Stack spacing={2}>
                     <p id="question">{sessionData.questions[currentIndex]}</p>
@@ -191,11 +193,10 @@ const QuestionPage = () => {
                 justifyContent: "space-between",
                 alignItems: "center",
             }}>
-                {currentIndex > 0 ? (
-                <Button onClick={() => setCurrentIndex(currentIndex - 1)}>
+                <Button variant="outlined" onClick={() => setCurrentIndex(currentIndex - 1)} disabled={currentIndex === 0}>
                     Previous
                 </Button>
-                ) : null}
+
                 <Button id="help-button" variant="contained" onClick={askClaude} >I need help.</Button>
                 <Button id="next-button" variant="outlined" onClick={movePage}>
                     Next

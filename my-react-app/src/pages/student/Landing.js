@@ -47,7 +47,7 @@ const Landing = () => {
                     },
                   }}
             />
-            <p className="info-element">
+            <div className="info-element" id="consent-label">
             By pressing “Begin ”below, you confirm that:
             <ul>
                 <li>You have read and understood the Participant Information Sheet.</li>
@@ -56,7 +56,7 @@ const Landing = () => {
                 <li>You understand that your responses to the questionnaire will be kept confidential and securely stored.</li>
                 <li>You consent to participate in this study.</li>
             </ul>
-            </p>
+            </div>
             <div id="student-start">
                 <Button variant="contained" onClick={questionPage}>Begin</Button>
             </div>
