@@ -141,10 +141,13 @@ const QuestionPage = () => {
     return (
         <div>
             <h1 id="question_set_name">{sessionData.questionSetName} - Question {currentIndex + 1}</h1>
-            <p>Start the question in your IDE. When you need help with this question, put your code in the box below and ask me a question. If you don't know what to do, click the button below and I will give you a step in the right direction.</p>
-            <Stack direction="row" spacing={6}>
+            <p>Start the question in your IDE. When you need help with this question, put your code in the box below and ask me a question. If you don't know what to do, click the button below and I will give you a step in the right direction. I can't tell you the answer but I'll try my best to guide you!</p>
+            <Stack direction="row" spacing={2} sx={{
+                justifyContent: "space-evenly",
+                alignItems: "center",
+            }}>
                 <Stack spacing={2}>
-                    <p id="question">{sessionData.questions[currentIndex]}</p>
+                    <p id="question" style={{maxWidth: "900px"}}>{sessionData.questions[currentIndex]}</p>
                     <TextField
                         fullWidth
                         multiline

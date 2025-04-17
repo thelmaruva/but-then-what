@@ -70,7 +70,7 @@ app.post('/ask-claude', async (req, res) => {
             content: [
               {
                 type: "text",
-                text: ". I was given this question, and I am having trouble trying to solve it: " + question + 
+                text: "I was given this question, and I am having trouble trying to solve it: " + question + 
                 "This is the code I have so far: " + code + "\n" + query
               }
             ]
